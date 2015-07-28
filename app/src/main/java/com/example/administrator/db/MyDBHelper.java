@@ -17,12 +17,14 @@ public class MyDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table user(" +
+                "_id integer primary key autoincrement," +
                 "name text," +
                 "phone text)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        db.execSQL("drop table if exists user");
+        onCreate(db);
     }
 }
