@@ -18,30 +18,30 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         MyDBHelper myDBHelper = new MyDBHelper(this, "manage", 4);
-        SQLiteDatabase dbWriter = myDBHelper.getWritableDatabase();
-        ContentValues cv  = new ContentValues();
-        cv.put("name", "zhangsan");
-        cv.put("phone", "12345");
-        dbWriter.insert("user", null, cv);
-
-        cv  = new ContentValues();
-        cv.put("name", "lisi");
-        cv.put("phone", "7890");
-        dbWriter.insert("user", null, cv);
-
-        dbWriter.close();
-
-//        SQLiteDatabase dbReader =  myDBHelper.getReadableDatabase();
-//        Cursor c = dbReader.query("user", null, null, null, null, null, null);
+//        SQLiteDatabase dbWriter = myDBHelper.getWritableDatabase();
+//        ContentValues cv  = new ContentValues();
+//        cv.put("name", "zhangsan");
+//        cv.put("phone", "12345");
+//        dbWriter.insert("user", null, cv);
 //
-//        while (c.moveToNext()) {
-//            String name = c.getString(c.getColumnIndex("name"));
-//            String phone = c.getString(c.getColumnIndex("phone"));
-//            Log.d("lsx", "name: " + name + "| phone: " + phone);
-//        }
+//        cv  = new ContentValues();
+//        cv.put("name", "lisi");
+//        cv.put("phone", "7890");
+//        dbWriter.insert("user", null, cv);
 //
-//        if (c != null) c.close();
-//        if (dbReader != null) dbReader.close();
+//        dbWriter.close();
+
+        SQLiteDatabase dbReader =  myDBHelper.getReadableDatabase();
+        Cursor c = dbReader.query("user", null, "name=? and phone=?", new String[]{"lisi", "7890"}, null, null, null);
+
+        while (c.moveToNext()) {
+            String name = c.getString(c.getColumnIndex("name"));
+            String phone = c.getString(c.getColumnIndex("phone"));
+            Log.d("lsx", "name: " + name + "| phone: " + phone);
+        }
+
+        if (c != null) c.close();
+        if (dbReader != null) dbReader.close();
 
     }
 
