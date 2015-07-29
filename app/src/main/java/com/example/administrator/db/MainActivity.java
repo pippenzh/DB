@@ -22,7 +22,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         mListView = (ListView) findViewById(R.id.lv_user);
 
-        MyDBHelper myDBHelper = new MyDBHelper(this, "manage", 4);
+        MyDBHelper myDBHelper = new MyDBHelper(this, "manage", 5);
 //        SQLiteDatabase dbWriter = myDBHelper.getWritableDatabase();
 //        ContentValues cv  = new ContentValues();
 //        cv.put("name", "zhangsan");
@@ -34,22 +34,27 @@ public class MainActivity extends ActionBarActivity {
 //        cv.put("phone", "7890");
 //        dbWriter.insert("user", null, cv);
 //
+//        cv  = new ContentValues();
+//        cv.put("name", "wwwwang");
+//        cv.put("phone", "7777");
+//        dbWriter.insert("user", null, cv);
+//
 //        dbWriter.close();
 
         SQLiteDatabase dbReader = myDBHelper.getReadableDatabase();
-        //Cursor c = dbReader.query("user", null, "name=? and phone=?", new String[]{"lisi", "7890"}, null, null, null);
         Cursor c = dbReader.query("user", null, null, null, null, null, null );
 
-        mAdapter = new SimpleCursorAdapter(this, R.layout.list_item, c, new String[]{"name"}, new int[] {R.id.tv_name});
+        mAdapter = new SimpleCursorAdapter(this, R.layout.list_item, c, new String[]{"name","phone"}, new int[] {R.id.tv_name, R.id.tv_phone});
         mListView.setAdapter(mAdapter);
+        c.moveToFirst();
         while (c.moveToNext()) {
             String name = c.getString(c.getColumnIndex("name"));
             String phone = c.getString(c.getColumnIndex("phone"));
             Log.d("lsx", "name: " + name + "| phone: " + phone);
         }
 
-        if (c != null) c.close();
-        if (dbReader != null) dbReader.close();
+       // if (c != null) c.close();
+       // if (dbReader != null) dbReader.close();
 
     }
 
